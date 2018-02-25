@@ -3,13 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 27
 
     defaultConfig {
         applicationId "de.memorian.template"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -46,45 +45,36 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Support Libraries
+    def supportLibVersion = "27.0.2"
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
-    implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+    implementation "com.android.support.constraint:constraint-layout:1.0.2"
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     // RxJava/RxAndroid
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion", {
+    implementation "io.reactivex.rxjava2:rxjava:2.0.9"
+    implementation("io.reactivex.rxjava2:rxandroid:2.0.1", {
         exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
     })
 
     // Timber
-    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.jakewharton.timber:timber:4.5.1"
 
     // ThirtyInch
+    def thirtyinchVersion = "0.8.5"
     implementation "net.grandcentrix.thirtyinch:thirtyinch:$thirtyinchVersion"
     implementation "net.grandcentrix.thirtyinch:thirtyinch-rx2:$thirtyinchVersion"
 
     // Networking
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    def retrofitVersion = "2.3.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.9.0"
 
     // Unit tests
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "com.nhaarman:mockito-kotlin:$mockitoVersion"
-    testImplementation "net.grandcentrix.thirtyinch:thirtyinch-test:$thirtyinchVersion"
-
-    // Android Testing Support Library's runner and rules
-    androidTestImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "com.android.support.test:runner:$runnerVersion"
-    androidTestImplementation "com.android.support.test:rules:$runnerVersion"
-
-    // Espresso UI Testing
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espressoVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+    testImplementation "junit:junit:4.12"
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
 }

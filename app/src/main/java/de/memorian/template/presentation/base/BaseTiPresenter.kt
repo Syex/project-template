@@ -8,7 +8,7 @@ import net.grandcentrix.thirtyinch.rx2.RxTiPresenterDisposableHandler
 /**
  * Base class for all *presenters*, adding some utility for managing [Disposables][Disposable].
  */
-abstract class BaseTiPresenter<V : TiView>() : TiPresenter<V>() {
+abstract class BaseTiPresenter<V : TiView> : TiPresenter<V>() {
 
     private val rxHelper = RxTiPresenterDisposableHandler(this)
 
