@@ -2,19 +2,18 @@ package de.memorian.template.presentation
 
 import android.app.Application
 import de.memorian.template.BuildConfig
+import de.memorian.template.Dependencies
 import de.memorian.template.domain.logging.ProductionTree
 import net.grandcentrix.thirtyinch.TiLog
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-/**
- * This *Application* sets up some app-wide configurations on initial start.
- */
-class Application : Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
+        Dependencies.init()
         setupTimber()
     }
 
