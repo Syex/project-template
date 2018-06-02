@@ -38,6 +38,13 @@ android {
     }
 }
 
+// Add generated source from UseKase
+android.applicationVariants.all { variant ->
+    variant.addJavaSourceFoldersToModel()
+    def kotlinGenerated = file("$buildDir/generated/source/kaptKotlin/${variant.name}")
+    variant.addJavaSourceFoldersToModel(kotlinGenerated)
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -61,7 +68,10 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxkotlin:2.2.0", {
         exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
     })
-    implementation "guru.stefma.cleancomponents:usekase:0.0.2"
+
+    def useKaseVersion = "0.0.2"
+    implementation "guru.stefma.cleancomponents:usekase:$useKaseVersion"
+    kapt  "guru.stefma.cleancomponents:usekase-processor:$useKaseVersion"
 
     // Timber
     implementation "com.jakewharton.timber:timber:4.7.0"
@@ -80,6 +90,15 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:3.10.0"
+
+    // View utility
+    implementation "com.github.bumptech.glide:glide:4.6.1"
+
+    // Room
+    def roomVersion = "1.1.0"
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+    kapt  "android.arch.persistence.room:compiler:$roomVersion"
 
     // Unit tests
     testImplementation "junit:junit:4.12"
