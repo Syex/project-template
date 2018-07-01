@@ -1,16 +1,13 @@
 package de.memorian.template
 
-import org.koin.dsl.module.Module
-import org.koin.dsl.module.applicationContext
-import org.koin.standalone.StandAloneContext.startKoin
+import org.kodein.di.Kodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.singleton
 
-object Dependencies {
+val kodein = Kodein {
+    import(coreModule())
+}
 
-    fun init() {
-        startKoin(listOf(coreModule))
-    }
-
-    private val coreModule: Module = applicationContext {
-
-    }
+private fun coreModule() = Kodein.Module {
 }

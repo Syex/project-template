@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
@@ -21,6 +23,9 @@ android {
         debug {
             applicationIdSuffix ".debug"
 
+            // crashlytics prevents incremental builds otherwise
+            ext.alwaysUpdateBuildId = false
+
             minifyEnabled true
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -36,6 +41,20 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    packagingOptions {
+        exclude 'META-INF/main.kotlin_module'
+    }
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 // Add generated source from UseKase
@@ -53,13 +72,17 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:cardview-v7:$supportLibVersion"
-    implementation "com.android.support.constraint:constraint-layout:1.1.0"
+    implementation "com.android.support.constraint:constraint-layout:1.1.2"
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation 'com.pawegio.kandroid:kandroid:0.8.7@aar'
     // requires support lib 28
     //implementation 'androidx.core:core-ktx:1.0.0-alpha1'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
 
     // RxJava/RxAndroid
     implementation "io.reactivex.rxjava2:rxjava:2.1.12"
@@ -70,7 +93,7 @@ dependencies {
         exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
     })
 
-    def useKaseVersion = "0.0.2"
+    def useKaseVersion = "0.0.3"
     implementation "guru.stefma.cleancomponents:usekase:$useKaseVersion"
     kapt  "guru.stefma.cleancomponents:usekase-processor:$useKaseVersion"
 
@@ -78,7 +101,8 @@ dependencies {
     implementation "com.jakewharton.timber:timber:4.7.0"
 
     // DI
-    implementation "org.koin:koin-android:0.9.3"
+    implementation 'org.kodein.di:kodein-di-generic-jvm:5.0.0'
+    implementation 'org.kodein.di:kodein-di-framework-android:5.0.0'
 
     // ThirtyInch
     def thirtyinchVersion = "0.8.5"
@@ -96,7 +120,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.6.1"
 
     // Room
-    def roomVersion = "1.1.0"
+    def roomVersion = "1.1.1"
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     implementation "android.arch.persistence.room:rxjava2:$roomVersion"
     kapt  "android.arch.persistence.room:compiler:$roomVersion"
@@ -105,3 +129,5 @@ dependencies {
     testImplementation "junit:junit:4.12"
     testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
 }
+
+//apply plugin: 'com.google.gms.google-services'

@@ -1,20 +1,24 @@
 package de.memorian.template.presentation
 
 import android.app.Application
+import com.crashlytics.android.Crashlytics
 import de.memorian.template.BuildConfig
-import de.memorian.template.Dependencies
 import de.memorian.template.domain.logging.ProductionTree
-import net.grandcentrix.thirtyinch.TiLog
-import timber.log.Timber
-import timber.log.Timber.DebugTree
+import io.fabric.sdk.android.Fabric
 
 class App : Application() {
 
+    companion object {
+
+        lateinit var instance: App
+    }
+
     override fun onCreate() {
         super.onCreate()
+        App.instance = this
 
-        Dependencies.init()
         setupTimber()
+        Fabric.with(this, Crashlytics())
     }
 
     private fun setupTimber() {
